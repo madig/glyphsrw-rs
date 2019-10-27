@@ -1,0 +1,1 @@
+Toy tool to play with the structure of the [Glyphs](https://glyphsapp.com/) file format.
