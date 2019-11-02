@@ -1,7 +1,6 @@
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::fs::File;
-use std::io;
 use std::io::prelude::Read;
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -9,18 +8,18 @@ use std::io::prelude::Read;
 struct Font {
     #[serde(rename = ".appVersion")]
     app_version: String,
-    copyright: String,
-    custom_parameters: Vec<CustomParameter>,
+    copyright: Option<String>,
+    custom_parameters: Option<Vec<CustomParameter>>,
     date: String,
-    designer: String,
+    designer: Option<String>,
     family_name: String,
-    feature_prefixes: Vec<Feature>,
-    features: Vec<Feature>,
+    feature_prefixes: Option<Vec<Feature>>,
+    features: Option<Vec<Feature>>,
     font_master: Vec<FontMaster>,
     glyphs: Vec<Master>,
-    instances: Vec<Instance>,
+    instances: Option<Vec<Instance>>,
     units_per_em: String,
-    user_data: HashMap<String, serde_json::Value>,
+    user_data: Option<HashMap<String, serde_json::Value>>,
     version_major: String,
     version_minor: String,
 }
@@ -41,16 +40,16 @@ struct Feature {
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 struct FontMaster {
-    alignment_zones: Vec<String>,
+    alignment_zones: Option<Vec<String>>,
     ascender: String,
     cap_height: String,
-    custom_parameters: Vec<CustomParameter>,
+    custom_parameters: Option<Vec<CustomParameter>>,
     descender: String,
-    horizontal_stems: Vec<String>,
+    horizontal_stems: Option<Vec<String>>,
     id: String,
     user_data: Option<HashMap<String, serde_json::Value>>,
-    vertical_stems: Vec<String>,
-    weight_value: String,
+    vertical_stems: Option<Vec<String>>,
+    weight_value: Option<String>,
     weight: Option<String>,
     x_height: String,
 }
@@ -61,7 +60,7 @@ struct Instance {
     custom_parameters: Option<Vec<CustomParameter>>,
     exports: Option<String>,
     instance_interpolations: HashMap<String, String>,
-    interpolation_weight: String,
+    interpolation_weight: Option<String>,
     name: String,
     weight_class: Option<String>,
 }
@@ -100,7 +99,15 @@ fn main() -> std::io::Result<()> {
     // let mut data_file = File::open("data/Cantarell.json")?;
     // let mut data_file = File::open("data/WorkSans.json")?;
     // let mut data_file = File::open("data/WorkSans-Italic.json")?;
-    let mut data_file = File::open("data/NotoSans-MM.json")?;
+    // let mut data_file = File::open("data/NotoSans-MM.json")?;
+    // let mut data_file = File::open("data/UFOFilenameTest.json")?;
+    // let mut data_file = File::open("data/IntegerFloat.json")?;
+    // let mut data_file = File::open("data/GlyphsUnitTestSans.json")?;
+    // let mut data_file = File::open("data/BracketTestFont2.json")?;
+    // let mut data_file = File::open("data/BraceTestFont.json")?;
+    // let mut data_file = File::open("data/AnchorAttachmentTest.json")?;
+    // let mut data_file = File::open("data/NewFont.json")?;
+    let mut data_file = File::open("data/Empty.json")?;
     let mut contents = String::new();
     data_file.read_to_string(&mut contents)?;
 

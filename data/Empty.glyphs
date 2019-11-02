@@ -1,0 +1,19 @@
+{
+.appVersion = "1268";
+date = "2019-11-02 00:10:04 +0000";
+familyName = "Neue Schrift";
+fontMaster = (
+{
+ascender = 800;
+capHeight = 700;
+descender = -200;
+id = "411B5942-AF65-4C88-A9BA-92122EB87E0E";
+xHeight = 500;
+}
+);
+glyphs = (
+);
+unitsPerEm = 1000;
+versionMajor = 1;
+versionMinor = 0;
+}
