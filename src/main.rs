@@ -106,13 +106,16 @@ fn main() -> std::io::Result<()> {
     // let mut data_file = File::open("data/BracketTestFont2.json")?;
     // let mut data_file = File::open("data/BraceTestFont.json")?;
     // let mut data_file = File::open("data/AnchorAttachmentTest.json")?;
-    // let mut data_file = File::open("data/NewFont.json")?;
-    let mut data_file = File::open("data/Empty.json")?;
+    let mut data_file = File::open("data/NewFont.json")?;
+    // let mut data_file = File::open("data/Empty.json")?;
     let mut contents = String::new();
     data_file.read_to_string(&mut contents)?;
 
     let font: Font = serde_json::from_str(&contents).unwrap();
-    println!("{:?}", font);
+    println!(
+        "{}",
+        ron::ser::to_string_pretty(&font, ron::ser::PrettyConfig::default()).unwrap()
+    );
 
     Ok(())
 }
