@@ -1,3 +1,4 @@
+use plist;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::fs::File;
@@ -23,10 +24,10 @@ struct Font {
     glyphs: Vec<Master>,
     instances: Option<Vec<Instance>>,
     kerning: Option<HashMap<String, HashMap<String, HashMap<String, String>>>>,
-    units_per_em: String,
+    units_per_em: u32,
     user_data: Option<HashMap<String, serde_json::Value>>,
-    version_major: String,
-    version_minor: String,
+    version_major: u32,
+    version_minor: u32,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -57,10 +58,10 @@ struct Feature {
 #[serde(deny_unknown_fields)]
 struct FontMaster {
     alignment_zones: Option<Vec<String>>,
-    ascender: String,
-    cap_height: String,
+    ascender: i32,
+    cap_height: i32,
     custom_parameters: Option<Vec<CustomParameter>>,
-    descender: String,
+    descender: i32,
     guide_lines: Option<Vec<Guideline>>,
     horizontal_stems: Option<Vec<String>>,
     id: String,
@@ -68,7 +69,7 @@ struct FontMaster {
     vertical_stems: Option<Vec<String>>,
     weight_value: Option<String>,
     weight: Option<String>,
-    x_height: String,
+    x_height: i32,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -121,7 +122,7 @@ struct Layer {
     name: Option<String>,
     paths: Option<Vec<Path>>,
     user_data: Option<HashMap<String, serde_json::Value>>,
-    width: String,
+    width: i32,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -132,7 +133,7 @@ struct BackgroundLayer {
     components: Option<Vec<Component>>,
     layer_id: Option<String>,
     paths: Option<Vec<Path>>,
-    width: Option<String>,
+    width: Option<i32>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -215,14 +216,24 @@ fn main() -> std::io::Result<()> {
     // let mut data_file = File::open("data/GlyphsUnitTestSans.json")?;
     // let mut data_file = File::open("data/BracketTestFont2.json")?;
     // let mut data_file = File::open("data/BraceTestFont.json")?;
-    let mut data_file = File::open("data/AnchorAttachmentTest.json")?;
+    // let mut data_file = File::open("data/AnchorAttachmentTest.json")?;
     // let mut data_file = File::open("data/NewFont.json")?;
     // let mut data_file = File::open("data/Empty.json")?;
-    let mut contents = String::new();
-    data_file.read_to_string(&mut contents)?;
+    // let mut contents = String::new();
+    // data_file.read_to_string(&mut contents)?;
 
-    let font: Font = serde_json::from_str(&contents).unwrap();
-    println!("{}", ron::ser::to_string_pretty(&font, ron::ser::PrettyConfig::default()).unwrap());
+    // let font: Font = serde_json::from_str(&contents).unwrap();
+    // println!(
+    //     "{}",
+    //     ron::ser::to_string_pretty(&font, ron::ser::PrettyConfig::default()).unwrap()
+    // );
+
+    // let f: Font = plist::from_file("data/Empty.glyphs").expect("lol");
+    let f: Font = plist::from_file("data/NewFont.glyphs").expect("lol");
+    println!(
+        "{}",
+        ron::ser::to_string_pretty(&f, ron::ser::PrettyConfig::default()).unwrap()
+    );
 
     Ok(())
 }
